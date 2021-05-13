@@ -1,6 +1,7 @@
+// The code for the chart is wrapped inside a function that automatically resizes the char
 function makeResponsive() {
-    // if the SVG area isn't empty when the browser loads,
-    // remove it and replace it with a resized version of the chart
+
+    // if the SVG area isn't empty when the browser loads, remove it and replace it with a resized version of the chart
     var svgArea = d3.select("#scatter").select("svg");
 
     // clear svg is not empty
@@ -37,7 +38,6 @@ function makeResponsive() {
     // Import data from the csv file
     d3.csv("assets/data/data.csv").then(function(healthcareData) {
         healthcareData.forEach(function(data) {
-            data.abbr = +data.abbr;
             data.poverty = +data.poverty;
             data.age = +data.age;
             data.income = +data.income;
@@ -48,12 +48,12 @@ function makeResponsive() {
 
         // Create scale functions
         var xLinearScale = d3.scaleLinear()
-        .domain([8, d3.max(healthcareData, d => d.poverty)])
-        .range([0, width]);
+            .domain([8, d3.max(healthcareData, d => d.poverty)])
+            .range([0, width]);
 
         var yLinearScale = d3.scaleLinear()
-        .domain([0, d3.max(healthcareData, d => d.healthcare)])
-        .range([height, 0]);
+            .domain([0, d3.max(healthcareData, d => d.healthcare)])
+            .range([height, 0]);
 
         // Create axis functions
         var bottomAxis = d3.axisBottom(xLinearScale);
@@ -61,28 +61,36 @@ function makeResponsive() {
 
         // Append Axes to chart
         chartGroup.append("g")
-        .attr("transform", `translate(0, ${height})`)
-        .call(bottomAxis);
+            .attr("transform", `translate(0, ${height})`)
+            .call(bottomAxis);
 
         chartGroup.append("g")
-        .call(leftAxis);
+            .call(leftAxis);
 
         // Create Circles
         var circlesGroup = chartGroup.selectAll("circle")
-        .data(healthcareData)
-        .enter()
-        .append("circle")
-        .attr("class", "stateCircle")
-        .attr("cx", d => xLinearScale(d.poverty))
-        .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", "15");
+            .data(healthcareData)
+            .enter()
+            .append("circle")
+            .attr("class", "stateCircle")
+            .attr("cx", d => xLinearScale(d.poverty))
+            .attr("cy", d => yLinearScale(d.healthcare))
+            .attr("r", "15")
+            .text(function(d) {return (d.abbr)});
+
+        // circlesGroup.append("text")
+        //     .data(healthcareData)
+        //     .attr("color", "white")
+        //     .attr("dx", d => xLinearScale(d.poverty))
+        //     .attr("dy", d => yLinearScale(d.healthcare))
+        //     .text(function(d) {return (d.abbr)});
     
         // Initialize tool tip
         var toolTip = d3.tip()
-        .attr("class", "d3-tip")
-        .offset([80, -60])
-        .html(function(d) {
-            return (`${d.state}<br>Poverty: ${d.poverty} %<br>Healthcare: ${d.healthcare} %`);
+            .attr("class", "d3-tip")
+            .offset([80, -60])
+            .html(function(d) {
+                return (`${d.state}<br>Poverty: ${d.poverty} %<br>Healthcare: ${d.healthcare} %`);
             });
         
         // Create tooltip in the chart
@@ -99,17 +107,17 @@ function makeResponsive() {
 
         // Create axes labels
         chartGroup.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left)
-        .attr("x", 0 - (height / 2))
-        .attr("dy", "1em")
-        .attr("class", "active")
-        .text("Lacks Healthcare (%)");
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .attr("class", "active")
+            .text("Lacks Healthcare (%)");
 
         chartGroup.append("text")
-        .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
-        .attr("class", "active")
-        .text("Poverty (%)");
+            .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+            .attr("class", "active")
+            .text("Poverty (%)");
 
 
     }).catch(function(error) {
