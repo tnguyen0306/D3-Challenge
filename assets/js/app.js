@@ -19,7 +19,7 @@ function makeResponsive() {
 
     var margin = {
     top: 50,
-    right: 200,
+    right: 150,
     bottom: 100,
     left: 50
     };
@@ -78,7 +78,7 @@ function makeResponsive() {
             .append("circle")
             .attr("class", "stateCircle")
             .attr("cx", d => xLinearScale(d.poverty))
-            .attr("cy", d => yLinearScale(d.healthcare))
+            .attr("cy", d => yLinearScale(d.healthcare) - 2)
             .attr("r", "10")
             .attr("opacity", "0.8");
 
@@ -88,7 +88,7 @@ function makeResponsive() {
             .append("text")
             .attr("class", "stateText")
             .text(function(d) {return (d.abbr)})
-            .attr("font-size", "8")
+            .attr("font-size", "9")
             .attr("dx", d => xLinearScale(d.poverty))
             .attr("dy", d => yLinearScale(d.healthcare));
     
