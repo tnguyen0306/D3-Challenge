@@ -71,7 +71,7 @@ d3.csv("data.csv").then(function(healthcareData) {
       .attr("class", "d3-tip")
       .offset([80, -60])
       .html(function(d) {
-          return (`${d.state}<br>Poverty: ${d.poverty} %<br>Healthcare: ${d.healthcare}`);
+          return (`${d.state}<br>Poverty: ${d.poverty} %<br>Healthcare: ${d.healthcare} %`);
         });
       
     // Create tooltip in the chart
@@ -85,6 +85,20 @@ d3.csv("data.csv").then(function(healthcareData) {
         .on("mouseout", function(data, index) {
           toolTip.hide(data);
         });
+
+    // Create axes labels
+    chartGroup.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left + 40)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "1em")
+      .attr("class", "active")
+      .text("Poverty (%)");
+
+    chartGroup.append("text")
+      .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+      .attr("class", "active")
+      .text("Lacks Healthcare (%)");
 
 
 }).catch(function(error) {
