@@ -25,7 +25,7 @@ var chartGroup = svg.append("g")
 
 
 // Import data from the csv file
-d3.csv("data.csv").then(function(healthcareData) {
+d3.csv("assets/data/data.csv").then(function(healthcareData) {
     healthcareData.forEach(function(data) {
         data.abbr = +data.abbr;
         data.poverty = +data.poverty;
@@ -59,12 +59,12 @@ d3.csv("data.csv").then(function(healthcareData) {
 
     // Create Circles
     var circlesGroup = chartGroup.selectAll("circle")
-      .data(hairData)
+      .data(healthcareData)
       .enter()
       .append("circle")
       .attr("class", stateCircle)
-      .attr("cx", d => xLinearScale(d.hair_length))
-      .attr("cy", d => yLinearScale(d.num_hits));
+      .attr("cx", d => xLinearScale(d.poverty))
+      .attr("cy", d => yLinearScale(d.healthcare));
   
     // Initialize tool tip
     var toolTip = d3.tip()
