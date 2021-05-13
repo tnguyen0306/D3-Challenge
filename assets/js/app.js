@@ -57,7 +57,25 @@ d3.csv("data.csv").then(function(healthcareData) {
     chartGroup.append("g")
       .call(leftAxis);
 
-    
+    // Create Circles
+    var circlesGroup = chartGroup.selectAll("circle")
+      .data(hairData)
+      .enter()
+      .append("circle")
+      .attr("class", stateCircle)
+      .attr("cx", d => xLinearScale(d.hair_length))
+      .attr("cy", d => yLinearScale(d.num_hits));
+  
+    // Initialize tool tip
+    var toolTip = d3.tip()
+      .attr("class", "d3-tip")
+      .offset([80, -60])
+      .html(function(d) {
+          return (`${d.state}<br>Poverty: ${d.poverty} %<br>Healthcare: ${d.healthcare}`);
+        });
+      
+    // Create tooltip in the chart
+    chartGroup.call(toolTip);
 
 
 }).catch(function(error) {
