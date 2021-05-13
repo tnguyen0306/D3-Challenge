@@ -75,15 +75,18 @@ function makeResponsive() {
             .attr("class", "stateCircle")
             .attr("cx", d => xLinearScale(d.poverty))
             .attr("cy", d => yLinearScale(d.healthcare))
-            .attr("r", "15")
-            .text(function(d) {return (d.abbr)});
+            .attr("r", "10")
+            .attr("opacity", "0.8");
 
-        // circlesGroup.append("text")
-        //     .data(healthcareData)
-        //     .attr("color", "white")
-        //     .attr("dx", d => xLinearScale(d.poverty))
-        //     .attr("dy", d => yLinearScale(d.healthcare))
-        //     .text(function(d) {return (d.abbr)});
+        var abbrGroup = chartGroup.selectAll("label")
+            .data(healthcareData)
+            .enter()
+            .append("text")
+            .attr("class", "stateText")
+            .text(function(d) {return (d.abbr)})
+            .attr("font-size", "8")
+            .attr("dx", d => xLinearScale(d.poverty))
+            .attr("dy", d => yLinearScale(d.healthcare));
     
         // Initialize tool tip
         var toolTip = d3.tip()
