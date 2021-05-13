@@ -11,7 +11,11 @@ function makeResponsive() {
 
     // Setup chart
     var svgWidth = window.innerWidth;
-    var svgHeight = window.innerHeight;
+    if (svgWidth > 820) {
+        svgWidth = 820
+    }
+
+    var svgHeight = 500;
 
     var margin = {
     top: 50,
