@@ -1,5 +1,5 @@
 // Setup chart
-var svgWidth = 960;
+var svgWidth = 860;
 var svgHeight = 500;
 
 var margin = {
@@ -62,7 +62,7 @@ d3.csv("assets/data/data.csv").then(function(healthcareData) {
       .data(healthcareData)
       .enter()
       .append("circle")
-      .attr("class", stateCircle)
+      .attr("class", "stateCircle")
       .attr("cx", d => xLinearScale(d.poverty))
       .attr("cy", d => yLinearScale(d.healthcare));
   
@@ -89,7 +89,7 @@ d3.csv("assets/data/data.csv").then(function(healthcareData) {
     // Create axes labels
     chartGroup.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left + 40)
+      .attr("y", 0 - margin.left)
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .attr("class", "active")
