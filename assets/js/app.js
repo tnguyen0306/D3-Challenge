@@ -104,7 +104,7 @@ function makeResponsive() {
         chartGroup.call(toolTip);
 
         // Display and hide the tooltip
-        circlesGroup.on("click", function(data) {
+        circlesGroup.on("mouseover", function(data) {
             toolTip.show(data, this);
         })
             // onmouseout event
