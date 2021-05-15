@@ -30,9 +30,18 @@
   text-anchor: middle;
 }
 
+.stateText:hover {
+  stroke: black;
+}
+
 .stateCircle {
   fill: #89bdd3;
+  stroke-width: 2px;
   stroke: #e3e3e3;
+}
+
+.stateCircle:hover {
+  stroke: black;
 }
 
 .chart {

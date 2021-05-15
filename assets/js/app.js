@@ -86,7 +86,7 @@ function makeResponsive() {
             .attr("class", "d3-tip")
             .offset([80, -60])
             .html(function(d) {
-            return (`${d.abbr}<br>${xLabel}: ${d[chosenXAxis]}<br>${yLabel}: ${d[chosenYAxis]}`);
+            return (`${d.state}<br>${xLabel}: ${d[chosenXAxis]}<br>${yLabel}: ${d[chosenYAxis]}`);
             });
 
         // Create tooltip in the chart fro circles
@@ -138,16 +138,16 @@ function makeResponsive() {
   
     // Initialize Tool Tip
     var toolTip = d3.tip()
-        .attr("class", "tooltip d3-tip")
+        .attr("class", " d3-tip")
         .offset([80, -60])
         .html(function(d) {
-          return (`<strong>${d.abbr}</strong><br>${xLabel} ${d[chosenXAxis]}<br>${yLabel} ${d[chosenYAxis]}`);
+          return (`${d.state}<br>${xLabel} ${d[chosenXAxis]}<br>${yLabel} ${d[chosenYAxis]}`);
         });
 
-    // Create Circles Tooltip in the Chart
+    // Create circles tooltip
     circlesGroup.call(toolTip);
 
-    // Create Event Listeners to Display and Hide the Circles Tooltip
+    // Display and hide the circles Tooltip
     circlesGroup.on("mouseover", function(data) {
         toolTip.show(data, this);
     })
@@ -156,10 +156,10 @@ function makeResponsive() {
             toolTip.hide(data);
         });
     
-    // Create Text Tooltip in the Chart
+    // Create text tooltip
     textGroup.call(toolTip);
       
-    // Create Event Listeners to Display and Hide the Text Tooltip
+    // Display and hide the text Tooltip
     textGroup.on("mouseover", function(data) {
         toolTip.show(data, this);
       })
@@ -201,8 +201,7 @@ function makeResponsive() {
         textGroup.transition()
             .duration(500)
             .attr("x", d => newXScale(d[chosenXAxis]))
-            .attr("y", d => newYScale(d[chosenYAxis]) + 3)
-            .attr("text-anchor", "middle");
+            .attr("y", d => newYScale(d[chosenYAxis]) + 3);
         return textGroup;
     }
   
@@ -335,7 +334,7 @@ function makeResponsive() {
                     // Updates data
                     circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
                     // Updates states abbr
-                    textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis)
+                    textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
                     // Updates Tooltips
                     circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup);
                     // Update x axis labels depending on the choice
@@ -390,7 +389,7 @@ function makeResponsive() {
                 // Updates data
                 circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
                 // Updates states abbr
-                textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis)
+                textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
                 // Updates Tooltips 
                 circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup);
                 // Update x axis labels depending on the choice
