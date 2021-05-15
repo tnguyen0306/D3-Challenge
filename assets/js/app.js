@@ -11,17 +11,17 @@ function makeResponsive() {
     
     // Setup chart
     var svgWidth = window.innerWidth;
-    if (svgWidth > 820) {
-        svgWidth = 820
+    if (svgWidth > 1000) {
+        svgWidth = 1000
     }
 
-    var svgHeight = 560;
+    var svgHeight = 550;
   
     var margin = {
-        top: 50,
+        top: 20,
         right: 150,
         bottom: 100,
-        left: 50
+        left: 100
     };
 
     var width = svgWidth - margin.left - margin.right;
@@ -44,8 +44,8 @@ function makeResponsive() {
     // Create scale functions for x and y axis
     function xScale(healthcareData, chosenXAxis) {
         var xLinearScale = d3.scaleLinear()
-            .domain([d3.min(healthcareData, d => d[chosenXAxis]) * 0.5,
-            d3.max(healthcareData, d => d[chosenXAxis]) * 1.5
+            .domain([d3.min(healthcareData, d => d[chosenXAxis]) * 0.85,
+            d3.max(healthcareData, d => d[chosenXAxis]) * 1.1
             ])
             .range([0, width]);
         return xLinearScale;
@@ -53,8 +53,8 @@ function makeResponsive() {
 
     function yScale(healthcareData, chosenYAxis) {
         var yLinearScale = d3.scaleLinear()
-            .domain([d3.min(healthcareData, d => d[chosenYAxis]) * 0.5,
-            d3.max(healthcareData, d => d[chosenYAxis]) * 1.5
+            .domain([d3.min(healthcareData, d => d[chosenYAxis]) * 0.75,
+            d3.max(healthcareData, d => d[chosenYAxis]) * 1.1
             ])
             .range([height, 0]);
         return yLinearScale;
@@ -174,7 +174,7 @@ function makeResponsive() {
     function renderXAxes(newXScale, xAxis) {
         var bottomAxis = d3.axisBottom(newXScale);
         xAxis.transition()
-            .duration(1000)
+            .duration(500)
             .call(bottomAxis);
         return xAxis;
     }
@@ -182,7 +182,7 @@ function makeResponsive() {
     function renderYAxes(newYScale, yAxis) {
         var leftAxis = d3.axisLeft(newYScale);
         yAxis.transition()
-            .duration(1000)
+            .duration(500)
             .call(leftAxis);
         return yAxis;
     }
@@ -190,7 +190,7 @@ function makeResponsive() {
     // Function for updating data
     function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
         circlesGroup.transition()
-            .duration(1000)
+            .duration(500)
             .attr("cx", d => newXScale(d[chosenXAxis]))
             .attr("cy", d => newYScale(d[chosenYAxis]));
         return circlesGroup;
@@ -199,9 +199,9 @@ function makeResponsive() {
     // Function for updating states abbr
     function renderText(textGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
         textGroup.transition()
-            .duration(1000)
+            .duration(500)
             .attr("x", d => newXScale(d[chosenXAxis]))
-            .attr("y", d => newYScale(d[chosenYAxis]))
+            .attr("y", d => newYScale(d[chosenYAxis]) + 3)
             .attr("text-anchor", "middle");
         return textGroup;
     }
@@ -243,7 +243,7 @@ function makeResponsive() {
             .attr("cx", d => xLinearScale(d[chosenXAxis]))
             .attr("cy", d => yLinearScale(d[chosenYAxis]))
             .attr("class", "stateCircle")
-            .attr("r", 10)
+            .attr("r", 15)
             .attr("opacity", ".8");
     
         // Append state abbr to circles
@@ -251,13 +251,11 @@ function makeResponsive() {
             .data(healthcareData)
             .enter()
             .append("text")
-            .attr("x", d => xLinearScale(d[chosenXAxis]))
-            .attr("y", d => yLinearScale(d[chosenYAxis]*.98))
-            .text(d => (d.abbr))
             .attr("class", "stateText")
-            .attr("font-size", "12px")
-            .attr("text-anchor", "middle")
-            .attr("fill", "white");
+            .text(d => (d.abbr))
+            .attr("font-size", "9")
+            .attr("x", d => xLinearScale(d[chosenXAxis]))
+            .attr("y", d => yLinearScale(d[chosenYAxis]) + 3);
     
         // Create group for x and y axis Labels
         var xLabelsGroup = chartGroup.append("g")
